@@ -75,24 +75,9 @@ robot = BuildRobot(links);
 
 
 %% Animation over configurations
-% for t = 0:0.1:100
-%     tensions = [2 - sin(t), 2 + sin(t)];
-% %     tensions = [1,3];
-%     robot = SolveRJMKin(robot, tensions);
-%     
-%     clf
-%     plotRJM(robot);
-%     axis equal
-%     drawnow
-%     
-% end
-
-%% Animation over external force
-for t = 1:0.5:100
-    
-    robot.links{end}.extLoad = @(T)constGlobalLoad(T, [0;0.03;-0.03]);
-    
-    tensions = [t, 1.5*t];
+for t = 0:0.1:100
+    tensions = [2 - sin(t), 2 + sin(t)];
+%     tensions = [1,3];
     robot = SolveRJMKin(robot, tensions);
     
     clf
@@ -101,6 +86,21 @@ for t = 1:0.5:100
     drawnow
     
 end
+
+%% Animation over external force
+% for t = 1:0.5:100
+%     
+%     robot.links{end}.extLoad = @(T)constGlobalLoad(T, [0;0.03;-0.03]);
+%     
+%     tensions = [t, 1.5*t];
+%     robot = SolveRJMKin(robot, tensions);
+%     
+%     clf
+%     plotRJM(robot);
+%     axis equal
+%     drawnow
+%     
+% end
 
 
 % 
