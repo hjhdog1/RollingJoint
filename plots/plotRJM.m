@@ -7,6 +7,7 @@ function [] = plotRJM(robot)
         
         hold on
         plot(shape_g(1,:), shape_g(2,:)); 
+        plot2DFrame(robot.T{i}, 5.0)
     end
     
     % tendions
