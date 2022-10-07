@@ -5,7 +5,7 @@ function [id_center, frame_points_id] = findFramePoints(points, axis_length)
 % Find sets of 3 points perpendicularly aligned with given axis_length.
 % +-15% magin of axis_length is applied.
 
-delta = 0.1;
+delta = 0.15;
 
 N = size(points, 1);
 
