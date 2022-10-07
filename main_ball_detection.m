@@ -18,7 +18,6 @@ Fig.T12 = readimage(imds,2); % Figure of the tension 1:2
 Fig.T13 = readimage(imds,3); % Figure of the tension 1:3
 Fig.T21 = readimage(imds,4); % Figure of the tension 2:1
 Fig.T31 = readimage(imds,5); % Figure of the tension 3:1
-Fig.test = readimage(imds,6); % marker
 
 % Detect checkerboard pattern in the images
 N = length(imds.Files);
@@ -179,7 +178,19 @@ for k = 1:N
     
     
     %% Sort frame from base to tip
-    p_frame{k} = p_frame{k}(N:-1:1);
+    dist_to_base = zeros(1, nFrames);
+    for i = 1:nFrames
+        dist_to_base(i) = norm(p_frame{k}{i}(1,:) - [1050, 2275]);
+    end
+
+    [~, id_sort] = sort(dist_to_base);
+
+    p_frame{k} = p_frame{k}(id_sort);
+
+
+%     if k ~= 2 && k ~= 3
+%         p_frame{k} = p_frame{k}(nFrames:-1:1);
+%     end
 
 
     %% Plot
