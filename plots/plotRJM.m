@@ -1,4 +1,4 @@
-function [] = plotRJM(robot)
+function [] = plotRJM(robot, clr)
 
     % links
     for i = 1:robot.nLinks
@@ -6,7 +6,11 @@ function [] = plotRJM(robot)
         shape_g = robot.T{i}(1:2,1:2) * shape_l + robot.T{i}(1:2,3);
         
         hold on
-        plot(shape_g(1,:), shape_g(2,:)); 
+        if nargin > 1
+            plot(shape_g(1,:), shape_g(2,:), 'Color', clr); 
+        else
+            plot(shape_g(1,:), shape_g(2,:)); 
+        end
         plot2DFrame(robot.T{i}, 5.0)
     end
     
@@ -26,9 +30,13 @@ function [] = plotRJM(robot)
         tendon_r(:, 2*i) = holes_c(:,2);
     end
     
-    plot(tendon_l(1,:), tendon_l(2,:), 'go-', 'LineWidth', 2);
-    plot(tendon_r(1,:), tendon_r(2,:), 'go-', 'LineWidth', 2);
-    
+    if nargin > 1
+        plot(tendon_l(1,:), tendon_l(2,:), 'Color', clr, 'LineWidth', 2);
+        plot(tendon_r(1,:), tendon_r(2,:), 'Color', clr, 'LineWidth', 2);
+    else
+        plot(tendon_l(1,:), tendon_l(2,:), 'go-', 'LineWidth', 2);
+        plot(tendon_r(1,:), tendon_r(2,:), 'go-', 'LineWidth', 2);
+    end
     
 end
 

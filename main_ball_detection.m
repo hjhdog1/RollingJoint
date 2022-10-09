@@ -10,7 +10,7 @@ clear all;
 
 %% Calculate pixel scale
 % Detect checkerboard pattern in image
-imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop"),...
+imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop_flat"),...
     "IncludeSubfolders",true,"FileExtensions",".jpg","LabelSource","foldernames")
 
 Fig.T11 = readimage(imds,1); % Figure of the tension 1:1
@@ -100,7 +100,7 @@ for k = 1:N
     
     %% Feature detection
     
-    points = detectHarrisFeatures(I);
+    points = detectBRISKFeatures(I);
     
     % remove feature on upper and lower image
     id_remove = points.Location(:,2) < 1150;

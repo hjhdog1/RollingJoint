@@ -5,7 +5,7 @@ close all;
 
 
 %% Read images
-imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop"),...
+imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop_flat"),...
     "IncludeSubfolders",true,"FileExtensions",".jpg","LabelSource","foldernames");
 
 N = length(imds.Files);
@@ -54,9 +54,7 @@ for i = 1:N
 end
 
 
-%% Plot Link
-
-% Build Robot
+%% Build Robot
 links{1} = buildLinkType5();
 links{2} = buildLinkType6();
 links{3} = buildLinkType7();
@@ -66,15 +64,61 @@ links{6} = buildLinkType10();
 
 robot = BuildRobot(links);
 
+% % push holes inside
+% robot_ogirinal = robot;
+% 
+% robot = pushHolesInside(robot, 1.0);
+% 
+% % Test kinematics
+% 
+% robot_ogirinal = SolveRJMKin(robot_ogirinal, [1,2]);
+% robot = SolveRJMKin(robot, [1,2]);
+% 
+% % figure(111)
+% % hold off
+% figure
+% plotRJM(robot_ogirinal, [1,0,0]);
+% plotRJM(robot, [0,0,1]);
+% 
+% axis equal
 
+%% Plot Link
+% 
 for i = 1:N
     for j = 1:nLinks
+% for i = 1
+%     for j = 2
 
-            link_shape = R{i,j} * robot.link_shapes{j} * data.to_pixel(i) + t{i,j};
+        link_shape = R{i,j} * robot.link_shapes{j} * data.to_pixel(i) + t{i,j};
 
-            figure(i)
-            hold on
-            plot(link_shape(1,:), link_shape(2,:))
+        figure(i)
+        hold on
+        plot(link_shape(1,:), link_shape(2,:))
+
+        % calculate contact points
+        if j == nLinks
+            continue
+        end
+
+        T1 = [R{i,j}, t{i,j} * data.to_mm(i); 0,0,1];
+        T2 = [R{i,j+1}, t{i,j+1} * data.to_mm(i); 0,0,1];
+
+        [s1, s2] = getContactPoints(robot.get_Tc_uc{j}, robot.get_Tp_up{j+1}, T1, T2);
+        slip(i,j) = s2 - s1;
+        disp([num2str(i), '/', num2str(j), ': ', num2str(s1 - s2)]);
+
+        Tc1 = robot.get_Tc_uc{j}(s1);
+        Tp2 = robot.get_Tp_up{j+1}(s2);
+
+%         contact1 = R{i,j} * Tc1(1:2,3) * data.to_pixel(i) + t{i,j};
+%         contact2 = R{i,j+1} * Tp2(1:2,3) * data.to_pixel(i) + t{i,j+1};
+
+        contact1 = T1 * Tc1(:,3) * data.to_pixel(i);
+        contact2 = T2 * Tp2(:,3) * data.to_pixel(i);
+
+        plot(contact1(1), contact1(2), 'ro')
+        plot(contact2(1), contact2(2), 'bx')
+            
 
     end
 end
@@ -83,7 +127,7 @@ end
 
 
 
-%% Compute robot configurations
+% Compute robot configurations
 
 tensions = [1,1; 1,2; 1,3; 2,1; 3,1];
 
