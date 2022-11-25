@@ -5,15 +5,17 @@ function [f, df] = constGlobalLoad(T, f_global, p_acting)
         p_acting = [0;0];
     end
 
+    q_skew_trans = [p_acting(2), -p_acting(1)];
     R_trans = T(1:2, 1:2)';
 
     f = f_global;
     f(2:3) = R_trans * f(2:3);
+    f(1) = f(1) - q_skew_trans * f(2:3);
     
     if nargout > 1
         df = zeros(3);
         df(2:3,1) = R_trans * [f_global(3); -f_global(2)];
-        df(1,1) = -[p_acting(2), -p_acting(1)] * df(2:3,1);
+        df(1,1) = -q_skew_trans * df(2:3,1);
     end
 
 end
