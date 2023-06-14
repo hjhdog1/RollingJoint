@@ -10,7 +10,8 @@ This is a MATLAB code of Rolling-Contact Joint Mechanism Kinematics with General
 
 The code is uploaded for review purpose now. The instruction and the code will be cleaned up once the paper is accepted.
 
-* 6/14/2023: Scripts to plot Fig. 1, Fig. 3, Fig 4 in the first submission have been included (e.g., main_fig1.m, main_fig3.m, and main_fig4.m)
+* 6/14/2023: Scripts to plot Fig. 1, Fig. 3, Fig 4 in the first submission have been included (e.g., main_fig1.m, main_fig3.m, and main_fig4.m).
+* (We express regret for the delayed code update. We believe that the updated code will better assist the reviewers in evaluating the paper.)
 
 ## Instruction
 (See main_example.m for a simple animated example.)
