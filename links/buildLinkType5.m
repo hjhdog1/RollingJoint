@@ -10,7 +10,7 @@ layer.child_hole_pos = [[-10;5], [10;5]];
 
 layer.parent_zero_angle = 0;
 layer.parent_zero_pos = [0,-10];
-layer.parent_curv_func = @(s)(25-(s/5)^2)*0.002;
+layer.parent_curv_func = @(s)0;
 layer.parent_surf_limit = [-15, 15];
 layer.parent_hole_pos = [[-10;-5], [10;-5]];
 

@@ -1,16 +1,16 @@
-function layer = buildLinkType8()
+function layer = buildLinkType2()
 
 
 layer = struct;
-layer.child_zero_angle = -0.2;
+layer.child_zero_angle = 0;
 layer.child_zero_pos = [0,10];
-layer.child_curv_func = @(s)rectFunction(s, 0, 100, -0.04, 0);
+layer.child_curv_func = @(s)-(25-(s/5)^2)*0.002;
 layer.child_surf_limit = [-15, 15];
 layer.child_hole_pos = [[-10;5], [10;5]];
 
 layer.parent_zero_angle = -0.3;
 layer.parent_zero_pos = [0,-10];
-layer.parent_curv_func = @(s)-0.02;
+layer.parent_curv_func = @(s)rectFunction(s, 0, 100, -0.03, 0.05);
 layer.parent_surf_limit = [-15, 15];
 layer.parent_hole_pos = [[-10;-5], [10;-5]];
 

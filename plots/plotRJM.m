@@ -15,7 +15,7 @@ function [] = plotRJM(robot, clr, line_style)
         else
             plot(shape_g(1,:), shape_g(2,:)); 
         end
-        plot2DFrame(robot.T{i}, 5.0)
+        plot2DFrame(robot.T{i}, 5.0);
     end
     
     % tendions
