@@ -1,4 +1,8 @@
-function [] = plotRJM(robot, clr)
+function [] = plotRJM(robot, clr, line_style)
+
+    if nargin < 3
+        line_style = '-';
+    end
 
     % links
     for i = 1:robot.nLinks
@@ -7,7 +11,7 @@ function [] = plotRJM(robot, clr)
         
         hold on
         if nargin > 1
-            plot(shape_g(1,:), shape_g(2,:), 'Color', clr); 
+            plot(shape_g(1,:), shape_g(2,:), line_style, 'Color', clr); 
         else
             plot(shape_g(1,:), shape_g(2,:)); 
         end
@@ -31,8 +35,8 @@ function [] = plotRJM(robot, clr)
     end
     
     if nargin > 1
-        plot(tendon_l(1,:), tendon_l(2,:), 'Color', clr, 'LineWidth', 2);
-        plot(tendon_r(1,:), tendon_r(2,:), 'Color', clr, 'LineWidth', 2);
+        plot(tendon_l(1,:), tendon_l(2,:), line_style, 'Color', clr, 'LineWidth', 2);
+        plot(tendon_r(1,:), tendon_r(2,:), line_style, 'Color', clr, 'LineWidth', 2);
     else
         plot(tendon_l(1,:), tendon_l(2,:), 'go-', 'LineWidth', 2);
         plot(tendon_r(1,:), tendon_r(2,:), 'go-', 'LineWidth', 2);

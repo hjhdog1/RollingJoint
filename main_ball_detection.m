@@ -10,14 +10,20 @@ clear all;
 
 %% Calculate pixel scale
 % Detect checkerboard pattern in image
-imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop_flat"),...
+
+% imds = imageDatastore(fullfile("imageprocessing","img","Test1","crop_flat"),...
+%     "IncludeSubfolders",true,"FileExtensions",".jpg","LabelSource","foldernames")
+
+imds = imageDatastore(fullfile("imageprocessing","img","Test6", "flat"),...
     "IncludeSubfolders",true,"FileExtensions",".jpg","LabelSource","foldernames")
+
+
 
 Fig.T11 = readimage(imds,1); % Figure of the tension 1:1
 Fig.T12 = readimage(imds,2); % Figure of the tension 1:2
 Fig.T13 = readimage(imds,3); % Figure of the tension 1:3
-Fig.T21 = readimage(imds,4); % Figure of the tension 2:1
-Fig.T31 = readimage(imds,5); % Figure of the tension 3:1
+% Fig.T21 = readimage(imds,4); % Figure of the tension 2:1
+% Fig.T31 = readimage(imds,5); % Figure of the tension 3:1
 
 % Detect checkerboard pattern in the images
 N = length(imds.Files);
@@ -38,8 +44,8 @@ for i = 1:N
 end
 
 % Calculate the length of square (checkerboard size = 7x8, square size = 10mm)
-rows = reshape(imagePoints(:,1,:), 6, 7, []);
-cols = reshape(imagePoints(:,2,:), 6, 7, []);
+rows = reshape(imagePoints(:,1,:), boardSize(1)-1, boardSize(2)-1, []);
+cols = reshape(imagePoints(:,2,:), boardSize(1)-1, boardSize(2)-1, []);
 
 
 squareSizePX = zeros(1, N);
@@ -60,7 +66,7 @@ for i = 1:N
         num2str(mean(diff_row(:)) / mean(diff_col(:)) * 100), '% aligned with plane.'])
 end
 
-squareSizeMM = 10;
+squareSizeMM = 15;
 
 to_mm = squareSizeMM./squareSizePX;
 to_pixel = squareSizePX./squareSizeMM;
@@ -103,10 +109,10 @@ for k = 1:N
     points = detectBRISKFeatures(I);
     
     % remove feature on upper and lower image
-    id_remove = points.Location(:,2) < 1150;
+    id_remove = points.Location(:,2) < 1500;
     points(id_remove) = [];
     
-    id_remove = points.Location(:,2) > 2300;
+    id_remove = points.Location(:,2) > 2550;
     points(id_remove) = [];
     
     % remove close points
@@ -180,7 +186,7 @@ for k = 1:N
     %% Sort frame from base to tip
     dist_to_base = zeros(1, nFrames);
     for i = 1:nFrames
-        dist_to_base(i) = norm(p_frame{k}{i}(1,:) - [1050, 2275]);
+        dist_to_base(i) = norm(p_frame{k}{i}(1,:) - [1130, 2490]);
     end
 
     [~, id_sort] = sort(dist_to_base);
