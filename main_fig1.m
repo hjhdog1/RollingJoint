@@ -45,7 +45,22 @@ for i = 1:2
 
 end
 
-text(-6,-22,'Input tensions', 'FontSize', 12)
+% text(-6,-22,'Input tensions', 'FontSize', 12)
+message = sprintf('Input tensions\nor displacements');
+text(-6,-22, message, 'FontSize', 12);
+
+
+% External load
+theta = pi*1.2;
+tipP = [-20,60];
+p_s = tipP - [cos(theta), sin(theta)] * 1.0;
+p_e = tipP - [cos(theta), sin(theta)] * 20.0;
+
+drawArrowTip(tipP, theta, 4, clr, 1)
+plot([p_s(1), p_e(1)], [p_s(2), p_e(2)], 'Color', clr, 'LineWidth', 2);
+plot(p(1), p(2), 'o', 'MarkerSize', 2, 'Color', clr, 'LineWidth', 2);
+
+text(-4, 66,'External load', 'FontSize', 12)
 
 
 % figure setting
@@ -56,6 +71,6 @@ set(gca,'Visible','off')
 set(gca,'LooseInset',get(gca,'TightInset'))
 axis equal
 
-set(gca, 'XLim', gca().XLim + [-1, 1], 'YLim', gca().YLim + [-1, 1])
+set(gca, 'XLim', gca().XLim + [-1, 10], 'YLim', gca().YLim + [-1, 1])
 set(gca,'LooseInset',get(gca,'TightInset'))
 

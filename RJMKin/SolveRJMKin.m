@@ -1,6 +1,6 @@
 function robot = SolveRJMKin(robot, tensions)
 % robot: robot struct
-% T: output transformations of links
+% tensions: input tensions
 
     % init forces
 %     robot.f(2,:) = sum(tensions);
