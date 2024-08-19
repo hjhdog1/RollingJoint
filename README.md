@@ -28,13 +28,22 @@ links{5} = buildLinkType5();
 ```
 robot = BuildRobot(links);
 ```
-3. Define tendon tensions, e.g.,
+3. Define input tensions, e.g.,
 ```
 tensions = [1, 2];
 ```
-4. Solve Kinematics of the robot for the given tensions as
+or define input displacements and initial tension guess, e.g., 
+```
+displacements = [102.2, 93.2];
+tensions0 = [1, 1];
+```
+4. Solve the Kinematics of the robot for the given tensions as
 ```
 robot = SolveRJMKin(robot, tensions);
+```
+or for the given displacements as
+```
+robot = SolveRJMKin_disp(robot, displacements, tensions0);
 ```
 5. Plot result by
 ```
